@@ -1,32 +1,32 @@
 'use strict'
 
 // Display window and clear button
-const display = document.querySelector('.display')
-const clear = document.querySelector('.clear')
+const displayEl = document.querySelector('.display')
+const clearEl = document.querySelector('.clear')
 
 // Numbers
-const zero = document.querySelector('.zero')
-const one = document.querySelector('.one')
-const two = document.querySelector('.two')
-const three = document.querySelector('.three')
-const four = document.querySelector('.four')
-const five = document.querySelector('.five')
-const six = document.querySelector('.six')
-const seven = document.querySelector('.seven')
-const eight = document.querySelector('.eight')
-const nine = document.querySelector('.nine')
+const zeroEl = document.querySelector('.zero')
+const oneEl = document.querySelector('.one')
+const twoEl = document.querySelector('.two')
+const threeEl = document.querySelector('.three')
+const fourEl = document.querySelector('.four')
+const fiveEl = document.querySelector('.five')
+const sixEl = document.querySelector('.six')
+const sevenEl = document.querySelector('.seven')
+const eightEl = document.querySelector('.eight')
+const nineEl = document.querySelector('.nine')
 
 // Operators
-const add = document.querySelector('.add')
-const subtract = document.querySelector('.subtract')
-const divide = document.querySelector('.divide')
-const multiply = document.querySelector('.multiply')
-const equal = document.querySelector('.equal')
+const addEl = document.querySelector('.add')
+const subtractEl = document.querySelector('.subtract')
+const divideEl = document.querySelector('.divide')
+const multiplyEl = document.querySelector('.multiply')
+const equalEl = document.querySelector('.equal')
 
 // Functions
-const Add = (number1, number2) => number1 + number2
-const Subtract = (number1, number2) => number1 - number2
-const Divide = (number1, number2) => number1 / number2
-const Multiply = (number1, number2) => number1 * number2
+const add = (number1, number2) => number1 + number2
+const subtract = (number1, number2) => number1 - number2
+const divide = (number1, number2) => number1 / number2
+const multiply = (number1, number2) => number1 * number2
 
 const operate = (operator, number1, number2) => operator(number1, number2)
