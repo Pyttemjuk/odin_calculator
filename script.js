@@ -21,8 +21,15 @@ calculatorBtns.addEventListener('click', (e) => {
     const action = key.dataset.action
 
     if (!action) {
-      displayValue = key.textContent
-      displayEl.textContent = displayValue
+      inputValue = key.textContent
+
+      if (displayValue === 0) {
+        displayValue = inputValue
+        displayEl.textContent = inputValue
+      } else if (displayValue !== 0) {
+        displayValue = inputValue
+        displayEl.textContent += inputValue
+      }
     }
 
     if (action === 'decimal') {
