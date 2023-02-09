@@ -10,9 +10,9 @@ let firstNumber,
   secondNumber = 0
 
 // Functions
-const add = (a, b) => a + b
-const subtract = (a, b) => a - b
-const divide = (a, b) => a / b
+const add = (firstNumber, secondNumber) => firstNumber + secondNumber
+const subtract = (number1, number2) => number1 - number2
+const divide = (number1, number2) => number1 / number2
 const multiply = (a, b) => a * b
 
 const operate = (operator, a, b) => operator(a, b)
@@ -58,7 +58,6 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'equals') {
-      console.log('equals')
     }
   }
 })
