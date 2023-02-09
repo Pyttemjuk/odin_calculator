@@ -35,7 +35,8 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'decimal') {
-      console.log('decimal')
+      displayValue += '.'
+      displayEl.textContent = displayValue
     }
 
     if (
