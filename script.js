@@ -12,13 +12,23 @@ let firstNumber = 0
 let secondNumber = 0
 
 // Functions
-const add = (firstNumber, secondNumber) => firstNumber + secondNumber
-const subtract = (firstNumber, secondNumber) => firstNumber - secondNumber
-const divide = (firstNumber, secondNumber) => firstNumber / secondNumber
-const multiply = (firstNumber, secondNumber) => firstNumber * secondNumber
+const add = (firstNumber, secondNumber) =>
+  parseInt(firstNumber) + parseInt(secondNumber)
+const subtract = (firstNumber, secondNumber) =>
+  parseInt(firstNumber) - parseInt(secondNumber)
+const divide = (firstNumber, secondNumber) =>
+  parseInt(firstNumber) / parseInt(secondNumber)
+const multiply = (firstNumber, secondNumber) =>
+  parseInt(firstNumber) * parseInt(secondNumber)
 
-const calculator = (operator, firstNumber, secondNumber) =>
-  operator(firstNumber, secondNumber)
+const calculator = (operator, firstNumber, secondNumber) => {
+  switch (operator) {
+    case 'add':
+      return add(firstNumber, secondNumber)
+    case 'subtract':
+      subtract(firstNumber, secondNumber)
+  }
+}
 
 calculatorBtns.addEventListener('click', (e) => {
   if (e.target.matches('button')) {
@@ -51,8 +61,13 @@ calculatorBtns.addEventListener('click', (e) => {
       operation = action
       if (firstNumber === 0) {
         firstNumber = displayValue
+        displayTopEl.textContent = displayBottomEl.textContent
+        displayValue = 0
+        displayBottomEl.textContent = 0
       } else {
         secondNumber = displayValue
+        firstNumber += calculator(action, firstNumber, secondNumber)
+        displayTopEl.textContent = firstNumber
       }
     }
 
