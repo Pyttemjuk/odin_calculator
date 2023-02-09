@@ -2,6 +2,8 @@
 
 // Display window and clear button
 const displayEl = document.querySelector('.display')
+const displayTopEl = document.querySelector('.display-top')
+const displayBottomEl = document.querySelector('.display-bottom')
 const calculatorBtns = document.querySelector('.calculator-btns')
 
 let displayValue = 0
@@ -28,10 +30,10 @@ calculatorBtns.addEventListener('click', (e) => {
 
       if (displayValue === 0) {
         displayValue = inputValue
-        displayEl.textContent = displayValue
+        displayBottomEl.textContent = displayValue
       } else if (displayValue !== 0) {
         displayValue += inputValue
-        displayEl.textContent = displayValue
+        displayBottomEl.textContent = displayValue
       }
     }
 
