@@ -6,6 +6,8 @@ const calculatorBtns = document.querySelector('.calculator-btns')
 
 let displayValue = 0
 let inputValue, operation
+let firstNumber,
+  secondNumber = 0
 
 // Functions
 const add = (number1, number2) => number1 + number2
@@ -43,7 +45,11 @@ calculatorBtns.addEventListener('click', (e) => {
       action === 'divide'
     ) {
       operation = action
-      console.log(operation)
+      if (firstNumber === 0) {
+        firstNumber = displayValue
+      } else {
+        secondNumber = displayValue
+      }
     }
 
     if (action === 'clear') {
