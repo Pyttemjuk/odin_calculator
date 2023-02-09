@@ -1,0 +1,43 @@
+html {
+  font-family: 'Varela Round', sans-serif;
+}
+
+.main-content {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.display p {
+  text-align: right;
+}
+
+.clear-btn {
+  margin-bottom: 3px;
+  display: flex;
+  justify-content: end;
+}
+
+.calculator-btns {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  row-gap: 3px;
+  column-gap: 3px;
+}
+
+.numbers-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 3px;
+  column-gap: 3px;
+}
+
+.operator-container {
+  display: grid;
+  row-gap: 3px;
+}
+
+.btn {
+  font-family: 'Varela Round', sans-serif;
+  font-size: 1.25rem;
+  height: 40px;
+}
