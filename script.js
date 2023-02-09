@@ -26,7 +26,11 @@ const calculator = (operator, firstNumber, secondNumber) => {
     case 'add':
       return add(firstNumber, secondNumber)
     case 'subtract':
-      subtract(firstNumber, secondNumber)
+      return subtract(firstNumber, secondNumber)
+    case 'divide':
+      return divide(firstNumber, secondNumber)
+    case 'multiply':
+      return multiply(firstNumber, secondNumber)
   }
 }
 
@@ -66,8 +70,10 @@ calculatorBtns.addEventListener('click', (e) => {
         displayBottomEl.textContent = 0
       } else {
         secondNumber = displayValue
-        firstNumber += calculator(action, firstNumber, secondNumber)
+        firstNumber = calculator(action, firstNumber, secondNumber)
         displayTopEl.textContent = firstNumber
+        displayBottomEl.textContent = 0
+        displayValue = 0
       }
     }
 
