@@ -24,18 +24,25 @@ calculatorBtns.addEventListener('click', (e) => {
       displayEl.textContent = displayValue
     }
 
+    if (action === 'decimal') {
+      console.log('decimal')
+    }
+
     if (
       action === 'add' ||
       action === 'subtract' ||
       action === 'multiply' ||
-      action === 'divide' ||
-      action === 'equals'
+      action === 'divide'
     ) {
-      console.log(action)
+      operation = action
     }
 
     if (action === 'clear') {
-      console.log(action)
+      console.log('clear')
+    }
+
+    if (action === 'equals') {
+      console.log('equals')
     }
   }
 })
