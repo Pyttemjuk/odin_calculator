@@ -27,7 +27,7 @@ calculatorBtns.addEventListener('click', (e) => {
         displayValue = inputValue
         displayEl.textContent = inputValue
       } else if (displayValue !== 0) {
-        displayValue = inputValue
+        displayValue += inputValue
         displayEl.textContent += inputValue
       }
     }
