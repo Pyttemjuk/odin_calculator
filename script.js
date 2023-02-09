@@ -20,7 +20,8 @@ calculatorBtns.addEventListener('click', (e) => {
     const action = key.dataset.action
 
     if (!action) {
-      console.log(key.textContent)
+      displayValue = key.textContent
+      displayEl.textContent = displayValue
     }
 
     if (
