@@ -8,8 +8,8 @@ const calculatorBtns = document.querySelector('.calculator-btns')
 
 let displayValue = 0
 let inputValue, operation
-let firstNumber,
-  secondNumber = 0
+let firstNumber = 0
+let secondNumber = 0
 
 // Functions
 const add = (firstNumber, secondNumber) => firstNumber + secondNumber
