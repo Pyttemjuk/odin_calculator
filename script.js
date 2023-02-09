@@ -10,12 +10,12 @@ let firstNumber,
   secondNumber = 0
 
 // Functions
-const add = (number1, number2) => number1 + number2
-const subtract = (number1, number2) => number1 - number2
-const divide = (number1, number2) => number1 / number2
-const multiply = (number1, number2) => number1 * number2
+const add = (a, b) => a + b
+const subtract = (a, b) => a - b
+const divide = (a, b) => a / b
+const multiply = (a, b) => a * b
 
-const operate = (operator, number1, number2) => operator(number1, number2)
+const operate = (operator, a, b) => operator(a, b)
 
 calculatorBtns.addEventListener('click', (e) => {
   if (e.target.matches('button')) {
