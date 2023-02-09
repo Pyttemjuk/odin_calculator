@@ -11,11 +11,12 @@ let firstNumber,
 
 // Functions
 const add = (firstNumber, secondNumber) => firstNumber + secondNumber
-const subtract = (number1, number2) => number1 - number2
-const divide = (number1, number2) => number1 / number2
-const multiply = (a, b) => a * b
+const subtract = (firstNumber, secondNumber) => firstNumber - secondNumber
+const divide = (firstNumber, secondNumber) => firstNumber / secondNumber
+const multiply = (firstNumber, secondNumber) => firstNumber * secondNumber
 
-const operate = (operator, a, b) => operator(a, b)
+const calculator = (operator, firstNumber, secondNumber) =>
+  operator(firstNumber, secondNumber)
 
 calculatorBtns.addEventListener('click', (e) => {
   if (e.target.matches('button')) {
