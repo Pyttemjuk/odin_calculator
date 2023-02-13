@@ -81,11 +81,16 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'equals') {
-      if (firstNumber || operator) {
-        secondNumber = calculator(operation, firstNumber, displayValue)
-        displayTopEl.textContent = secondNumber
-        displayBottomEl.textContent = 0
-      }
     }
+    if (
+      !firstNumber ||
+      !operation ||
+      (operation === 'divide' && parseFloat(displayValue) === 0)
+    )
+      return
+
+    secondNumber = calculator(operation, firstNumber, displayValue)
+    displayTopEl.textContent = secondNumber
+    displayBottomEl.textContent = 0
   }
 })
