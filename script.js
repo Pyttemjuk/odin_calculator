@@ -7,7 +7,7 @@ const displayBottomEl = document.querySelector('.display-bottom')
 const calculatorBtns = document.querySelector('.calculator-btns')
 
 let displayValue = 0
-let inputValue, operation
+let operation
 let firstNumber = 0
 let secondNumber = 0
 
@@ -40,13 +40,11 @@ calculatorBtns.addEventListener('click', (e) => {
     const action = key.dataset.action
 
     if (!action) {
-      inputValue = key.textContent
-
       if (displayValue === 0) {
-        displayValue = inputValue
+        displayValue = key.textContent
         displayBottomEl.textContent = displayValue
       } else if (displayValue !== 0) {
-        displayValue += inputValue
+        displayValue += key.textContent
         displayBottomEl.textContent = displayValue
       }
     }
