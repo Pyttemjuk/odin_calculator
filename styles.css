@@ -1,5 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-family: 'Varela Round', sans-serif;
+}
+
+p {
+  margin: 0;
 }
 
 .main-content {
@@ -12,6 +20,7 @@ html {
 }
 
 .display p {
+  height: 50%;
   text-align: right;
 }
 
