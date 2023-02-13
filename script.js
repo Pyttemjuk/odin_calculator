@@ -83,7 +83,9 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'equals') {
-      console.log('equals')
+      secondNumber = calculator(operation, firstNumber, displayValue)
+      displayTopEl.textContent = secondNumber
+      displayBottomEl.textContent = ''
     }
   }
 })
