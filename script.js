@@ -40,10 +40,10 @@ calculatorBtns.addEventListener('click', (e) => {
     const displayValue = displayBottomEl.textContent
 
     if (!action) {
-      if (displayValue === 0) {
+      if (parseFloat(displayValue) === 0) {
         displayBottomEl.textContent = key.textContent
       } else if (displayValue !== 0) {
-        displayBottomEl.textContent = key.textContent
+        displayBottomEl.textContent += key.textContent
       }
     }
 
