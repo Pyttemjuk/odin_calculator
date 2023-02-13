@@ -40,7 +40,7 @@ calculatorBtns.addEventListener('click', (e) => {
     const displayValue = displayBottomEl.textContent
 
     if (!action) {
-      if (parseFloat(displayValue) === 0) {
+      if (displayValue === '0') {
         displayBottomEl.textContent = key.textContent
       } else if (displayValue !== 0) {
         displayBottomEl.textContent += key.textContent
@@ -49,7 +49,11 @@ calculatorBtns.addEventListener('click', (e) => {
 
     if (action === 'decimal') {
       if (!displayValue.includes('.')) {
-        displayBottomEl.textContent += '.'
+        if (!displayValue) {
+          displayBottomEl.textContent += '0.'
+        } else {
+          displayBottomEl.textContent += '.'
+        }
       }
     }
 
