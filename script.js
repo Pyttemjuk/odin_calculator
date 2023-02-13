@@ -59,7 +59,7 @@ calculatorBtns.addEventListener('click', (e) => {
       action === 'multiply' ||
       action === 'divide'
     ) {
-      e.target.classList.add('btn-selected')
+      key.classList.add('btn-selected')
 
       if (operation === 'divide' && parseFloat(displayValue) === 0) {
         operation = action
@@ -68,13 +68,13 @@ calculatorBtns.addEventListener('click', (e) => {
         firstNumber = displayValue
         operation = action
         displayTopEl.textContent = displayBottomEl.textContent
-        displayBottomEl.textContent = 0
+        displayBottomEl.textContent = ''
       } else {
         secondNumber = displayValue
         firstNumber = calculator(operation, firstNumber, secondNumber)
         operation = action
         displayTopEl.textContent = firstNumber
-        displayBottomEl.textContent = 0
+        displayBottomEl.textContent = ''
       }
     }
 
@@ -93,7 +93,7 @@ calculatorBtns.addEventListener('click', (e) => {
 
       secondNumber = calculator(operation, firstNumber, displayValue)
       displayTopEl.textContent = secondNumber
-      displayBottomEl.textContent = 0
+      displayBottomEl.textContent = ''
     }
   }
 })
