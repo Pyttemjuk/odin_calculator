@@ -39,6 +39,10 @@ calculatorBtns.addEventListener('click', (e) => {
     const action = key.dataset.action
     const displayValue = displayBottomEl.textContent
 
+    Array.from(key.parentNode.children).forEach((k) =>
+      k.classList.remove('btn-selected')
+    )
+
     if (!action) {
       if (displayValue === '0') {
         displayBottomEl.textContent = key.textContent
@@ -60,6 +64,8 @@ calculatorBtns.addEventListener('click', (e) => {
       action === 'divide'
     ) {
       key.classList.add('btn-selected')
+
+      if (!displayValue) return
 
       if (operation === 'divide' && parseFloat(displayValue) === 0) {
         operation = action
