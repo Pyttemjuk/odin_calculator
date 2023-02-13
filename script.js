@@ -63,22 +63,23 @@ calculatorBtns.addEventListener('click', (e) => {
       action === 'multiply' ||
       action === 'divide'
     ) {
-      if (firstNumber === 0) {
+      if (
+        operation === 'divide' &&
+        (parseFloat(displayValue) === 0 || !displayValue)
+      ) {
+        operation = action
+        return
+      } else if (firstNumber === 0) {
         firstNumber = displayValue
         operation = action
         displayTopEl.textContent = displayBottomEl.textContent
         displayBottomEl.textContent = ''
       } else {
-        if (!displayValue || (displayValue == 0 && operation == 'divide')) {
-          operation = action
-          return
-        } else {
-          secondNumber = displayValue
-          firstNumber = calculator(operation, firstNumber, secondNumber)
-          operation = action
-          displayTopEl.textContent = firstNumber
-          displayBottomEl.textContent = ''
-        }
+        secondNumber = displayValue
+        firstNumber = calculator(operation, firstNumber, secondNumber)
+        operation = action
+        displayTopEl.textContent = firstNumber
+        displayBottomEl.textContent = ''
       }
     }
 
