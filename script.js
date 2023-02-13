@@ -52,8 +52,10 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'decimal') {
-      displayValue += '.'
-      displayBottomEl.textContent = displayValue
+      if (!displayValue.includes('.')) {
+        displayValue += '.'
+        displayBottomEl.textContent = displayValue
+      }
     }
 
     if (
