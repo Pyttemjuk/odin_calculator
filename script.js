@@ -13,13 +13,13 @@ let secondNumber = 0
 
 // Functions
 const add = (firstNumber, secondNumber) =>
-  parseInt(firstNumber) + parseInt(secondNumber)
+  parseDouble(firstNumber) + parseDouble(secondNumber)
 const subtract = (firstNumber, secondNumber) =>
-  parseInt(firstNumber) - parseInt(secondNumber)
+  parseDouble(firstNumber) - parseDouble(secondNumber)
 const divide = (firstNumber, secondNumber) =>
-  parseInt(firstNumber) / parseInt(secondNumber)
+  parseDouble(firstNumber) / parseDouble(secondNumber)
 const multiply = (firstNumber, secondNumber) =>
-  parseInt(firstNumber) * parseInt(secondNumber)
+  parseDouble(firstNumber) * parseDouble(secondNumber)
 
 const calculator = (operator, firstNumber, secondNumber) => {
   switch (operator) {
