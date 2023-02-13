@@ -62,15 +62,18 @@ calculatorBtns.addEventListener('click', (e) => {
       action === 'multiply' ||
       action === 'divide'
     ) {
-      operation = action
       if (firstNumber === 0) {
         firstNumber = displayValue
+        operation = action
         displayTopEl.textContent = displayBottomEl.textContent
         displayValue = 0
         displayBottomEl.textContent = 0
       } else {
+        if (displayValue == 0 && operation == 'divide') return
+
         secondNumber = displayValue
-        firstNumber = calculator(action, firstNumber, secondNumber)
+        firstNumber = calculator(operation, firstNumber, secondNumber)
+        operation = action
         displayTopEl.textContent = firstNumber
         displayBottomEl.textContent = 0
         displayValue = 0
@@ -82,6 +85,7 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'equals') {
+      console.log('equals')
     }
   }
 })
