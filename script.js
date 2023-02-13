@@ -88,8 +88,9 @@ calculatorBtns.addEventListener('click', (e) => {
       !firstNumber ||
       !operation ||
       (operation === 'divide' && parseFloat(displayValue) === 0)
-    )
+    ) {
       return
+    }
 
     secondNumber = calculator(operation, firstNumber, displayValue)
     displayTopEl.textContent = secondNumber
