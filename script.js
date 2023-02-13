@@ -59,6 +59,8 @@ calculatorBtns.addEventListener('click', (e) => {
       action === 'multiply' ||
       action === 'divide'
     ) {
+      e.target.classList.add('btn-selected')
+
       if (operation === 'divide' && parseFloat(displayValue) === 0) {
         operation = action
         return

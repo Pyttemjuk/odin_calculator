@@ -1,3 +1,8 @@
+:root {
+  --btn-bg-color: #e7e7e7;
+  --btn-selected-bg-color: #dddddd;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -50,7 +55,13 @@ p {
 }
 
 .btn {
+  border: none;
+  background-color: var(--btn-bg-color);
   font-family: 'Varela Round', sans-serif;
   font-size: 1.25rem;
   height: 40px;
+}
+
+.btn-selected {
+  background-color: var(--btn-selected-bg-color);
 }
