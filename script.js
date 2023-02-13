@@ -66,17 +66,19 @@ calculatorBtns.addEventListener('click', (e) => {
         firstNumber = displayValue
         operation = action
         displayTopEl.textContent = displayBottomEl.textContent
-        displayValue = 0
-        displayBottomEl.textContent = 0
+        displayValue = ''
+        displayBottomEl.textContent = ''
       } else {
-        if (displayValue == 0 && operation == 'divide') return
-
-        secondNumber = displayValue
-        firstNumber = calculator(operation, firstNumber, secondNumber)
-        operation = action
-        displayTopEl.textContent = firstNumber
-        displayBottomEl.textContent = 0
-        displayValue = 0
+        if (!displayValue || (displayValue == 0 && operation == 'divide')) {
+          return
+        } else {
+          secondNumber = displayValue
+          firstNumber = calculator(operation, firstNumber, secondNumber)
+          operation = action
+          displayTopEl.textContent = firstNumber
+          displayBottomEl.textContent = ''
+          displayValue = ''
+        }
       }
     }
 
