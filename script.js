@@ -6,7 +6,6 @@ const displayTopEl = document.querySelector('.display-top')
 const displayBottomEl = document.querySelector('.display-bottom')
 const calculatorBtns = document.querySelector('.calculator-btns')
 
-let displayValue = 0
 let operation
 let firstNumber = 0
 let secondNumber = 0
@@ -38,21 +37,19 @@ calculatorBtns.addEventListener('click', (e) => {
   if (e.target.matches('button')) {
     const key = e.target
     const action = key.dataset.action
+    const displayValue = displayBottomEl.textContent
 
     if (!action) {
       if (displayValue === 0) {
-        displayValue = key.textContent
-        displayBottomEl.textContent = displayValue
+        displayBottomEl.textContent = key.textContent
       } else if (displayValue !== 0) {
-        displayValue += key.textContent
-        displayBottomEl.textContent = displayValue
+        displayBottomEl.textContent = key.textContent
       }
     }
 
     if (action === 'decimal') {
       if (!displayValue.includes('.')) {
-        displayValue += '.'
-        displayBottomEl.textContent = displayValue
+        displayBottomEl.textContent += '.'
       }
     }
 
@@ -66,10 +63,10 @@ calculatorBtns.addEventListener('click', (e) => {
         firstNumber = displayValue
         operation = action
         displayTopEl.textContent = displayBottomEl.textContent
-        displayValue = ''
         displayBottomEl.textContent = ''
       } else {
         if (!displayValue || (displayValue == 0 && operation == 'divide')) {
+          operation = action
           return
         } else {
           secondNumber = displayValue
@@ -77,7 +74,6 @@ calculatorBtns.addEventListener('click', (e) => {
           operation = action
           displayTopEl.textContent = firstNumber
           displayBottomEl.textContent = ''
-          displayValue = ''
         }
       }
     }
