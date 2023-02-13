@@ -49,11 +49,7 @@ calculatorBtns.addEventListener('click', (e) => {
 
     if (action === 'decimal') {
       if (!displayValue.includes('.')) {
-        if (!displayValue) {
-          displayBottomEl.textContent += '0.'
-        } else {
-          displayBottomEl.textContent += '.'
-        }
+        displayBottomEl.textContent += '.'
       }
     }
 
@@ -63,23 +59,20 @@ calculatorBtns.addEventListener('click', (e) => {
       action === 'multiply' ||
       action === 'divide'
     ) {
-      if (
-        operation === 'divide' &&
-        (parseFloat(displayValue) === 0 || !displayValue)
-      ) {
+      if (operation === 'divide' && parseFloat(displayValue) === 0) {
         operation = action
         return
       } else if (firstNumber === 0) {
         firstNumber = displayValue
         operation = action
         displayTopEl.textContent = displayBottomEl.textContent
-        displayBottomEl.textContent = ''
+        displayBottomEl.textContent = 0
       } else {
         secondNumber = displayValue
         firstNumber = calculator(operation, firstNumber, secondNumber)
         operation = action
         displayTopEl.textContent = firstNumber
-        displayBottomEl.textContent = ''
+        displayBottomEl.textContent = 0
       }
     }
 
@@ -88,9 +81,11 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'equals') {
-      secondNumber = calculator(operation, firstNumber, displayValue)
-      displayTopEl.textContent = secondNumber
-      displayBottomEl.textContent = ''
+      if (firstNumber || operator) {
+        secondNumber = calculator(operation, firstNumber, displayValue)
+        displayTopEl.textContent = secondNumber
+        displayBottomEl.textContent = 0
+      }
     }
   }
 })
