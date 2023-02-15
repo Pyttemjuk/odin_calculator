@@ -1,7 +1,6 @@
 'use strict'
 
 // Display window and clear button
-const displayEl = document.querySelector('.display')
 const displayTopEl = document.querySelector('.display-top')
 const displayBottomEl = document.querySelector('.display-bottom')
 const calculatorBtns = document.querySelector('.calculator-btns')
@@ -127,9 +126,6 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'equals') {
-      console.log(operation)
-      console.log(currentSum)
-      console.log(currentNumber)
       if (
         decimal ||
         operation === 'equals' ||
