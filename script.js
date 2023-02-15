@@ -63,21 +63,30 @@ calculatorBtns.addEventListener('click', (e) => {
       action === 'multiply' ||
       action === 'divide'
     ) {
+      operation = action
+      console.log(
+        document.querySelector(`[data-action=${operation}]`).textContent
+      )
+
       if (!displayValue) return
+
       key.classList.add('btn-selected')
 
-      if (action === 'divide' && parseFloat(displayValue) === 0) {
-        operation = action
+      if (
+        (action === 'divide' && parseFloat(displayValue) === 0) ||
+        (firstNumber === 0 && parseFloat(displayValue) === 0)
+      ) {
         return
       } else if (firstNumber === 0) {
         firstNumber = displayValue
-        operation = action
-        displayTopEl.textContent = displayBottomEl.textContent
+        displayTopEl.textContent =
+          displayValue +
+          ' ' +
+          document.querySelector(`[data-action=${operation}]`).textContent
         displayBottomEl.textContent = ''
       } else {
         secondNumber = displayValue
         firstNumber = calculator(operation, firstNumber, secondNumber)
-        operation = action
         displayTopEl.textContent = firstNumber
         displayBottomEl.textContent = ''
       }
