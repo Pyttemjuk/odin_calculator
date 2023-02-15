@@ -6,19 +6,16 @@ const displayTopEl = document.querySelector('.display-top')
 const displayBottomEl = document.querySelector('.display-bottom')
 const calculatorBtns = document.querySelector('.calculator-btns')
 
-let operation
-let firstNumber = 0
-let secondNumber = 0
+let operation = ''
+let decimal = false
+let currentNumber = 0
+let currentSum = 0
 
 // Functions
-const add = (firstNumber, secondNumber) =>
-  parseFloat(firstNumber) + parseFloat(secondNumber)
-const subtract = (firstNumber, secondNumber) =>
-  parseFloat(firstNumber) - parseFloat(secondNumber)
-const divide = (firstNumber, secondNumber) =>
-  parseFloat(firstNumber) / parseFloat(secondNumber)
-const multiply = (firstNumber, secondNumber) =>
-  parseFloat(firstNumber) * parseFloat(secondNumber)
+const add = (firstNumber, secondNumber) => firstNumber + secondNumber
+const subtract = (firstNumber, secondNumber) => firstNumber - secondNumber
+const divide = (firstNumber, secondNumber) => firstNumber / secondNumber
+const multiply = (firstNumber, secondNumber) => firstNumber * secondNumber
 
 const calculator = (operator, firstNumber, secondNumber) => {
   switch (operator) {
@@ -39,21 +36,27 @@ calculatorBtns.addEventListener('click', (e) => {
     const action = key.dataset.action
     const displayValue = displayBottomEl.textContent
 
-    Array.from(key.parentNode.children).forEach((k) =>
-      k.classList.remove('btn-selected')
-    )
-
     if (!action) {
-      if (displayValue === '0') {
+      if (operation === 'equals') {
+        currentSum = 0
+        displayTopEl.textContent = ''
+        operation = ''
+        displayBottomEl.textContent = key.textContent
+      } else if (displayValue === '0') {
         displayBottomEl.textContent = key.textContent
       } else if (displayValue !== 0) {
         displayBottomEl.textContent += key.textContent
       }
+
+      decimal = false
+      currentNumber = parseFloat(displayBottomEl.textContent)
     }
 
     if (action === 'decimal') {
       if (!displayValue.includes('.')) {
-        displayBottomEl.textContent += '.'
+        displayBottomEl.textContent += !displayValue ? '0.' : '.'
+        currentNumber = displayBottomEl.textContent
+        decimal = true
       }
     }
 
@@ -63,33 +66,60 @@ calculatorBtns.addEventListener('click', (e) => {
       action === 'multiply' ||
       action === 'divide'
     ) {
-      operation = action
-      console.log(
-        document.querySelector(`[data-action=${operation}]`).textContent
-      )
-
-      if (!displayValue) return
-
-      key.classList.add('btn-selected')
-
-      if (
-        (action === 'divide' && parseFloat(displayValue) === 0) ||
-        (firstNumber === 0 && parseFloat(displayValue) === 0)
-      ) {
+      if (decimal) {
         return
-      } else if (firstNumber === 0) {
-        firstNumber = displayValue
+      }
+
+      if (!displayValue) {
+        operation = action
         displayTopEl.textContent =
-          displayValue +
+          parseFloat(displayTopEl.textContent) +
+          ' ' +
+          document.querySelector(`[data-action=${action}]`).textContent
+        return
+      }
+
+      if (!operation) {
+        operation = action
+      }
+
+      displayTopEl.textContent =
+        displayValue +
+        ' ' +
+        document.querySelector(`[data-action=${action}]`).textContent
+
+      if (currentSum && operation === 'equals') {
+        operation = action
+        displayTopEl.textContent =
+          currentSum +
+          ' ' +
+          document.querySelector(`[data-action=${operation}]`).textContent
+        displayBottomEl.textContent = ''
+      } else if (
+        (action === 'divide' && currentNumber === 0) ||
+        (currentSum === 0 && currentNumber === 0)
+      ) {
+        operation = action
+        return
+      } else if (currentSum === 0) {
+        currentSum = parseFloat(displayValue)
+        operation = action
+        displayTopEl.textContent =
+          currentSum +
           ' ' +
           document.querySelector(`[data-action=${operation}]`).textContent
         displayBottomEl.textContent = ''
       } else {
-        secondNumber = displayValue
-        firstNumber = calculator(operation, firstNumber, secondNumber)
-        displayTopEl.textContent = firstNumber
+        currentSum = calculator(operation, currentSum, currentNumber)
+        operation = action
+        displayTopEl.textContent =
+          currentSum +
+          ' ' +
+          document.querySelector(`[data-action=${operation}]`).textContent
         displayBottomEl.textContent = ''
       }
+
+      displayBottomEl.textContent = ''
     }
 
     if (action === 'clear') {
@@ -97,17 +127,24 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'equals') {
+      console.log(operation)
+      console.log(currentSum)
+      console.log(currentNumber)
       if (
-        !firstNumber ||
+        decimal ||
+        operation === 'equals' ||
+        !currentSum ||
         !operation ||
         (operation === 'divide' && parseFloat(displayValue) === 0)
       ) {
         return
+      } else {
+        displayTopEl.textContent += ' ' + currentNumber
+        currentSum = calculator(operation, currentSum, currentNumber)
+        displayBottomEl.textContent = currentSum
+        currentNumber = 0
+        operation = 'equals'
       }
-
-      secondNumber = calculator(operation, firstNumber, displayValue)
-      displayTopEl.textContent = secondNumber
-      displayBottomEl.textContent = ''
     }
   }
 })
