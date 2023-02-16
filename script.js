@@ -122,7 +122,11 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'clear') {
-      console.log('clear')
+      currentNumber = 0
+      currentSum = 0
+      operation = ''
+      displayBottomEl.textContent = 0
+      displayTopEl.textContent = ''
     }
 
     if (action === 'equals') {
