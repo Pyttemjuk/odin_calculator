@@ -121,6 +121,13 @@ calculatorBtns.addEventListener('click', (e) => {
       displayBottomEl.textContent = ''
     }
 
+    if (action === 'plus-minus') {
+      displayBottomEl.textContent =
+        parseFloat(displayValue) < 0
+          ? -parseFloat(displayValue)
+          : 0 - parseFloat(displayValue)
+    }
+
     if (action === 'clear') {
       currentNumber = 0
       currentSum = 0
