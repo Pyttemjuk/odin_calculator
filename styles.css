@@ -29,29 +29,11 @@ p {
   text-align: right;
 }
 
-.clear-btn {
-  margin-bottom: 3px;
-  display: flex;
-  justify-content: end;
-}
-
-.calculator-btns {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  row-gap: 3px;
-  column-gap: 3px;
-}
-
 .calculator-btns {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   row-gap: 3px;
   column-gap: 3px;
-}
-
-.operator-container {
-  display: grid;
-  row-gap: 3px;
 }
 
 .btn {
@@ -60,8 +42,4 @@ p {
   font-family: 'Varela Round', sans-serif;
   font-size: 1.25rem;
   height: 40px;
-}
-
-.btn-selected {
-  background-color: var(--btn-selected-bg-color);
 }
