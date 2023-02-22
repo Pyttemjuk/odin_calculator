@@ -16,7 +16,7 @@ const subtract = (firstNumber, secondNumber) => firstNumber - secondNumber
 const divide = (firstNumber, secondNumber) => firstNumber / secondNumber
 const multiply = (firstNumber, secondNumber) => firstNumber * secondNumber
 
-const calculator = (operator, firstNumber, secondNumber) => {
+function calculator(operator, firstNumber, secondNumber) {
   switch (operator) {
     case 'add':
       return add(firstNumber, secondNumber)
@@ -29,13 +29,17 @@ const calculator = (operator, firstNumber, secondNumber) => {
   }
 }
 
-calculatorBtns.addEventListener('click', (e) => {
+document.calculatorBtns.addEventListener('click', (e) => {
   if (e.target.matches('button')) {
     const key = e.target
     const action = key.dataset.action
     const displayValue = displayBottomEl.textContent
 
     if (!action) {
+      if (displayValue.length === 10) {
+        return
+      }
+
       if (operation === 'equals') {
         currentSum = 0
         displayTopEl.textContent = ''
@@ -122,6 +126,8 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'plus-minus') {
+      if (!displayValue) return
+
       displayBottomEl.textContent =
         parseFloat(displayValue) < 0
           ? -parseFloat(displayValue)
@@ -148,7 +154,10 @@ calculatorBtns.addEventListener('click', (e) => {
       } else {
         displayTopEl.textContent += ' ' + currentNumber
         currentSum = calculator(operation, currentSum, currentNumber)
-        displayBottomEl.textContent = currentSum
+
+        if (currentSum.toString().includes('.'))
+          displayBottomEl.textContent = currentSum.toString().substring(0, 9)
+
         currentNumber = 0
         operation = 'equals'
       }
