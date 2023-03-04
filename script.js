@@ -29,7 +29,7 @@ function calculator(operator, firstNumber, secondNumber) {
   }
 }
 
-document.calculatorBtns.addEventListener('click', (e) => {
+calculatorBtns.addEventListener('click', (e) => {
   if (e.target.matches('button')) {
     const key = e.target;
     const action = key.dataset.action;
@@ -154,10 +154,7 @@ document.calculatorBtns.addEventListener('click', (e) => {
       } else {
         displayTopEl.textContent += ' ' + currentNumber;
         currentSum = calculator(operation, currentSum, currentNumber);
-
-        if (currentSum.toString().includes('.'))
-          displayBottomEl.textContent = currentSum.toString().substring(0, 9);
-
+        displayBottomEl.textContent = currentSum;
         currentNumber = 0;
         operation = 'equals';
       }
