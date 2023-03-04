@@ -10,23 +10,14 @@ let decimal = false;
 let currentNumber = 0;
 let currentSum = 0;
 
-// Functions
-const add = (firstNumber, secondNumber) => firstNumber + secondNumber;
-const subtract = (firstNumber, secondNumber) => firstNumber - secondNumber;
-const divide = (firstNumber, secondNumber) => firstNumber / secondNumber;
-const multiply = (firstNumber, secondNumber) => firstNumber * secondNumber;
-
 function calculator(operator, firstNumber, secondNumber) {
-  switch (operator) {
-    case 'add':
-      return add(firstNumber, secondNumber);
-    case 'subtract':
-      return subtract(firstNumber, secondNumber);
-    case 'divide':
-      return divide(firstNumber, secondNumber);
-    case 'multiply':
-      return multiply(firstNumber, secondNumber);
-  }
+  if (operator === 'add') return firstNumber + secondNumber;
+
+  if (operator === 'subtract') return firstNumber - secondNumber;
+
+  if (operator === 'divide') return firstNumber / secondNumber;
+
+  if (operator === 'multiply') return firstNumber * secondNumber;
 }
 
 calculatorBtns.addEventListener('click', (e) => {
