@@ -45,6 +45,17 @@ calculatorBtns.addEventListener('click', (e) => {
       }
     }
 
+    if (action === 'plus-minus') {
+      displayString(action, key);
+    }
+
+    if (action === 'clear') {
+      displayString(action, key);
+      currentNumber = 0;
+      currentSum = 0;
+      operation = '';
+    }
+
     if (
       action === 'add' ||
       action === 'subtract' ||
@@ -55,18 +66,18 @@ calculatorBtns.addEventListener('click', (e) => {
         return;
       }
 
-      if (!displayBottomEl.textContent) {
+      if (!operation) {
+        operation = action;
+      }
+
+      if (!currentNumber) {
         operation = action;
         displayTopEl.textContent =
           currentSum +
           ' ' +
           document.querySelector(`[data-action=${action}]`).textContent;
-        currentNumber = '';
+        displayBottomEl.textContent = '';
         return;
-      }
-
-      if (!operation) {
-        operation = action;
       }
 
       displayTopEl.textContent =
@@ -85,46 +96,27 @@ calculatorBtns.addEventListener('click', (e) => {
       }
 
       if (currentSum && operation === 'equals') {
-        operation = action;
         displayTopEl.textContent =
           currentSum +
           ' ' +
           document.querySelector(`[data-action=${action}]`).textContent;
       } else if (currentSum === 0) {
         currentSum = parseFloat(displayBottomEl.textContent);
-        operation = action;
         displayTopEl.textContent =
           currentSum +
           ' ' +
           document.querySelector(`[data-action=${action}]`).textContent;
       } else {
         currentSum = calculator(operation, currentSum, currentNumber);
-        operation = action;
         displayTopEl.textContent =
           currentSum +
           ' ' +
           document.querySelector(`[data-action=${action}]`).textContent;
       }
 
+      operation = action;
       currentNumber = '';
       displayBottomEl.textContent = '';
-    }
-
-    if (action === 'plus-minus') {
-      if (!displayBottomEl.textContent) return;
-
-      displayBottomEl.textContent =
-        parseFloat(displayBottomEl.textContent) < 0
-          ? -parseFloat(displayBottomEl.textContent)
-          : 0 - parseFloat(displayBottomEl.textContent);
-    }
-
-    if (action === 'clear') {
-      currentNumber = 0;
-      currentSum = 0;
-      operation = '';
-      displayBottomEl.textContent = 0;
-      displayTopEl.textContent = '';
     }
 
     if (action === 'equals') {
@@ -139,9 +131,8 @@ calculatorBtns.addEventListener('click', (e) => {
       ) {
         return;
       } else {
-        displayTopEl.textContent += ' ' + currentNumber;
         currentSum = calculator(operation, currentSum, currentNumber);
-        displayBottomEl.textContent = currentSum;
+        displayString(action, key);
         currentNumber = '';
         operation = 'equals';
       }
@@ -168,6 +159,36 @@ function displayString(action, key) {
   if (action === 'decimal') {
     if (!displayBottomEl.textContent.includes('.')) {
       displayBottomEl.textContent += !displayBottomEl.textContent ? '0.' : '.';
+    }
+  }
+
+  if (action === 'plus-minus') {
+    if (!displayBottomEl.textContent) return;
+
+    displayBottomEl.textContent =
+      parseFloat(displayBottomEl.textContent) < 0
+        ? -parseFloat(displayBottomEl.textContent)
+        : 0 - parseFloat(displayBottomEl.textContent);
+  }
+
+  if (action === 'clear') {
+    displayBottomEl.textContent = 0;
+    displayTopEl.textContent = '';
+  }
+
+  if (action === 'equals') {
+    if (
+      decimal ||
+      operation === 'equals' ||
+      !currentNumber ||
+      !currentSum ||
+      !operation ||
+      (operation === 'divide' && parseFloat(displayBottomEl.textContent) === 0)
+    ) {
+      return;
+    } else {
+      displayTopEl.textContent += ' ' + currentNumber;
+      displayBottomEl.textContent = currentSum;
     }
   }
 }
