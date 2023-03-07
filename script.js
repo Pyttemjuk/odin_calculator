@@ -38,6 +38,10 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'decimal') {
+      if (operation === 'equals') {
+        return;
+      }
+
       if (!displayBottomEl.textContent.includes('.')) {
         displayString(action, key);
         currentNumber = displayBottomEl.textContent;
@@ -47,6 +51,12 @@ calculatorBtns.addEventListener('click', (e) => {
 
     if (action === 'plus-minus') {
       displayString(action, key);
+
+      if (operation === 'equals') {
+        currentSum = parseFloat(displayBottomEl.textContent);
+      } else {
+        currentNumber = parseFloat(displayBottomEl.textContent);
+      }
     }
 
     if (action === 'clear') {
@@ -96,24 +106,16 @@ calculatorBtns.addEventListener('click', (e) => {
       }
 
       if (currentSum && operation === 'equals') {
-        displayTopEl.textContent =
-          currentSum +
-          ' ' +
-          document.querySelector(`[data-action=${action}]`).textContent;
       } else if (currentSum === 0) {
         currentSum = parseFloat(displayBottomEl.textContent);
-        displayTopEl.textContent =
-          currentSum +
-          ' ' +
-          document.querySelector(`[data-action=${action}]`).textContent;
       } else {
         currentSum = calculator(operation, currentSum, currentNumber);
-        displayTopEl.textContent =
-          currentSum +
-          ' ' +
-          document.querySelector(`[data-action=${action}]`).textContent;
       }
 
+      displayTopEl.textContent =
+        currentSum +
+        ' ' +
+        document.querySelector(`[data-action=${action}]`).textContent;
       operation = action;
       currentNumber = '';
       displayBottomEl.textContent = '';
