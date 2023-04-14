@@ -1,6 +1,7 @@
 'use strict';
 
-// Display window and clear button
+// Calculator, display window and clear button
+const calculatorEl = document.querySelector('.calculator');
 const displayTopEl = document.querySelector('.display-top');
 const displayBottomEl = document.querySelector('.display-bottom');
 const calculatorBtns = document.querySelector('.calculator-btns');
@@ -10,7 +11,7 @@ let decimal = false;
 let currentNumber = 0;
 let currentSum = 0;
 
-function calculator(operator, firstNumber, secondNumber) {
+function calculate(operator, firstNumber, secondNumber) {
   if (operator === 'add') return firstNumber + secondNumber;
 
   if (operator === 'subtract') return firstNumber - secondNumber;
@@ -29,6 +30,7 @@ calculatorBtns.addEventListener('click', (e) => {
       displayString(action, key);
 
       if (operation === 'equals') {
+        currentNumber = parseFloat(displayBottomEl.textContent);
         currentSum = 0;
         operation = '';
       }
@@ -109,7 +111,7 @@ calculatorBtns.addEventListener('click', (e) => {
       } else if (currentSum === 0) {
         currentSum = parseFloat(displayBottomEl.textContent);
       } else {
-        currentSum = calculator(operation, currentSum, currentNumber);
+        currentSum = calculate(operation, currentSum, currentNumber);
       }
 
       displayTopEl.textContent =
@@ -133,9 +135,10 @@ calculatorBtns.addEventListener('click', (e) => {
       ) {
         return;
       } else {
-        currentSum = calculator(operation, currentSum, currentNumber);
+        currentSum = calculate(operation, currentSum, currentNumber);
         displayString(action, key);
         currentNumber = '';
+        calculatorEl.dataset.previousOperation = 'equals';
         operation = 'equals';
       }
     }
@@ -144,7 +147,7 @@ calculatorBtns.addEventListener('click', (e) => {
 
 function displayString(action, key) {
   if (!action) {
-    if (displayBottomEl.textContent.length === 10) {
+    if (displayBottomEl.textContent.length >= 10) {
       return;
     }
 
