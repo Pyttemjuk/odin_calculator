@@ -161,15 +161,6 @@ function displayString(action, key) {
     action === 'multiply' ||
     action === 'divide'
   ) {
-    if (!currentNumber) {
-      displayTopEl.textContent =
-        currentSum +
-        ' ' +
-        document.querySelector(`[data-action=${action}]`).textContent;
-      displayBottomEl.textContent = '';
-      return;
-    }
-
     displayTopEl.textContent =
       currentSum +
       ' ' +
