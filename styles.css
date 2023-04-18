@@ -18,7 +18,7 @@ p {
 
 .calculator {
   background-color: var(--calc-bg-color);
-  max-width: 250px;
+  width: 250px;
   margin: 0 auto;
   padding: 8px;
   border-radius: 8px;
