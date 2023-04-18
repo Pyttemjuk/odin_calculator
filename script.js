@@ -72,15 +72,6 @@ calculatorBtns.addEventListener('click', (e) => {
         return;
       }
 
-      if (!previousOperation) {
-        previousOperation = action;
-      }
-
-      if (!currentNumber) {
-        previousOperation = action;
-        return;
-      }
-
       //prettier-ignore
       if (
         (action === 'divide' && 
@@ -89,6 +80,10 @@ calculatorBtns.addEventListener('click', (e) => {
         ) {
           previousOperation = action;
           return;
+        }
+
+      if (!previousOperation) {
+        previousOperation = action;
       }
 
       if (currentSum && previousOperation === 'equals') {
@@ -97,8 +92,9 @@ calculatorBtns.addEventListener('click', (e) => {
       } else {
         currentSum = calculate(previousOperation, currentSum, currentNumber);
       }
+
       previousOperation = action;
-      currentNumber = '';
+      currentNumber = 0;
     }
 
     if (action === 'equals') {
@@ -112,11 +108,11 @@ calculatorBtns.addEventListener('click', (e) => {
           parseFloat(displayBottomEl.textContent) === 0)
       ) {
         return;
-      } else {
-        currentSum = calculate(previousOperation, currentSum, currentNumber);
-        currentNumber = '';
-        previousOperation = 'equals';
       }
+
+      currentSum = calculate(previousOperation, currentSum, currentNumber);
+      currentNumber = 0;
+      previousOperation = 'equals';
     }
 
     displayString(action, key);
