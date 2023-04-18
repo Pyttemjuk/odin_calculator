@@ -74,8 +74,7 @@ calculatorBtns.addEventListener('click', (e) => {
 
       //prettier-ignore
       if (
-        (action === 'divide' && 
-        (currentNumber === 0 || !currentNumber)) ||
+        (action === 'divide' && currentNumber === 0) ||
         (currentSum === 0 && currentNumber === 0)
         ) {
           previousOperation = action;
@@ -101,8 +100,6 @@ calculatorBtns.addEventListener('click', (e) => {
       if (
         decimal ||
         previousOperation === 'equals' ||
-        !currentNumber ||
-        !currentSum ||
         !previousOperation ||
         (previousOperation === 'divide' &&
           parseFloat(displayBottomEl.textContent) === 0)
