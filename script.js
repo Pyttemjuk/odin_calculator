@@ -183,19 +183,7 @@ function displayString(action, key) {
   }
 
   if (action === 'equals') {
-    if (
-      decimal ||
-      previousOperation === 'equals' ||
-      !currentNumber ||
-      !currentSum ||
-      !previousOperation ||
-      (previousOperation === 'divide' &&
-        parseFloat(displayBottomEl.textContent) === 0)
-    ) {
-      return;
-    } else {
-      displayTopEl.textContent += ' ' + currentNumber;
-      displayBottomEl.textContent = currentSum;
-    }
+    displayTopEl.textContent += ' ' + currentNumber;
+    displayBottomEl.textContent = currentSum;
   }
 }
