@@ -128,9 +128,9 @@ function displayString(action, key) {
     if (previousOperation === 'equals') {
       displayTopEl.textContent = '';
       displayBottomEl.textContent = key.textContent;
-    } else if (currentNumber === 0 || !currentNumber) {
+    } else if (currentNumber === 0) {
       displayBottomEl.textContent = key.textContent;
-    } else if (currentNumber !== 0) {
+    } else {
       displayBottomEl.textContent += key.textContent;
     }
   }
@@ -169,11 +169,6 @@ function displayString(action, key) {
       displayBottomEl.textContent = '';
       return;
     }
-
-    displayTopEl.textContent =
-      displayBottomEl.textContent +
-      ' ' +
-      document.querySelector(`[data-action=${action}]`).textContent;
 
     displayTopEl.textContent =
       currentSum +
