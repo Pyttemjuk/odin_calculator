@@ -6,7 +6,7 @@ const displayTopEl = document.querySelector('.display-top');
 const displayBottomEl = document.querySelector('.display-bottom');
 const calculatorBtns = document.querySelector('.calculator-btns');
 
-let operation = '';
+let previousOperation = '';
 let decimal = false;
 let currentNumber = 0;
 let currentSum = 0;
@@ -27,12 +27,10 @@ calculatorBtns.addEventListener('click', (e) => {
     const action = key.dataset.action;
 
     if (!action) {
-      displayString(action, key);
-
-      if (operation === 'equals') {
+      if (previousOperation === 'equals') {
         currentNumber = parseFloat(displayBottomEl.textContent);
         currentSum = 0;
-        operation = '';
+        previousOperation = '';
       }
 
       decimal = false;
@@ -40,21 +38,18 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'decimal') {
-      if (operation === 'equals') {
+      if (previousOperation === 'equals') {
         return;
       }
 
       if (!displayBottomEl.textContent.includes('.')) {
-        displayString(action, key);
         currentNumber = displayBottomEl.textContent;
         decimal = true;
       }
     }
 
     if (action === 'plus-minus') {
-      displayString(action, key);
-
-      if (operation === 'equals') {
+      if (previousOperation === 'equals') {
         currentSum = parseFloat(displayBottomEl.textContent);
       } else {
         currentNumber = parseFloat(displayBottomEl.textContent);
@@ -62,10 +57,9 @@ calculatorBtns.addEventListener('click', (e) => {
     }
 
     if (action === 'clear') {
-      displayString(action, key);
       currentNumber = 0;
       currentSum = 0;
-      operation = '';
+      previousOperation = '';
     }
 
     if (
@@ -78,47 +72,37 @@ calculatorBtns.addEventListener('click', (e) => {
         return;
       }
 
-      if (!operation) {
-        operation = action;
+      if (!previousOperation) {
+        previousOperation = action;
       }
 
       if (!currentNumber) {
-        operation = action;
-        displayTopEl.textContent =
-          currentSum +
-          ' ' +
-          document.querySelector(`[data-action=${action}]`).textContent;
-        displayBottomEl.textContent = '';
+        previousOperation = action;
         return;
       }
-
-      displayTopEl.textContent =
-        displayBottomEl.textContent +
-        ' ' +
-        document.querySelector(`[data-action=${action}]`).textContent;
 
       //prettier-ignore
       if (
         (action === 'divide' && 
         (currentNumber === 0 || !currentNumber)) ||
         (currentSum === 0 && currentNumber === 0)
-      ) {
-        operation = action;
-        return;
+        ) {
+          previousOperation = action;
+          return;
       }
 
-      if (currentSum && operation === 'equals') {
+      if (currentSum && previousOperation === 'equals') {
       } else if (currentSum === 0) {
         currentSum = parseFloat(displayBottomEl.textContent);
       } else {
-        currentSum = calculate(operation, currentSum, currentNumber);
+        currentSum = calculate(previousOperation, currentSum, currentNumber);
       }
 
       displayTopEl.textContent =
         currentSum +
         ' ' +
         document.querySelector(`[data-action=${action}]`).textContent;
-      operation = action;
+      previousOperation = action;
       currentNumber = '';
       displayBottomEl.textContent = '';
     }
@@ -126,32 +110,35 @@ calculatorBtns.addEventListener('click', (e) => {
     if (action === 'equals') {
       if (
         decimal ||
-        operation === 'equals' ||
+        previousOperation === 'equals' ||
         !currentNumber ||
         !currentSum ||
-        !operation ||
-        (operation === 'divide' &&
+        !previousOperation ||
+        (previousOperation === 'divide' &&
           parseFloat(displayBottomEl.textContent) === 0)
       ) {
         return;
       } else {
-        currentSum = calculate(operation, currentSum, currentNumber);
-        displayString(action, key);
+        currentSum = calculate(previousOperation, currentSum, currentNumber);
         currentNumber = '';
-        calculatorEl.dataset.previousOperation = 'equals';
-        operation = 'equals';
+        previousOperation = 'equals';
       }
     }
+
+    displayString(action, key);
   }
 });
 
 function displayString(action, key) {
   if (!action) {
-    if (displayBottomEl.textContent.length >= 10) {
+    if (
+      previousOperation !== 'equals' &&
+      displayBottomEl.textContent.length >= 10
+    ) {
       return;
     }
 
-    if (operation === 'equals') {
+    if (previousOperation === 'equals') {
       displayTopEl.textContent = '';
       displayBottomEl.textContent = key.textContent;
     } else if (currentNumber === 0 || !currentNumber) {
@@ -181,14 +168,36 @@ function displayString(action, key) {
     displayTopEl.textContent = '';
   }
 
+  if (
+    action === 'add' ||
+    action === 'subtract' ||
+    action === 'multiply' ||
+    action === 'divide'
+  ) {
+    if (!currentNumber) {
+      displayTopEl.textContent =
+        currentSum +
+        ' ' +
+        document.querySelector(`[data-action=${action}]`).textContent;
+      displayBottomEl.textContent = '';
+      return;
+    }
+
+    displayTopEl.textContent =
+      displayBottomEl.textContent +
+      ' ' +
+      document.querySelector(`[data-action=${action}]`).textContent;
+  }
+
   if (action === 'equals') {
     if (
       decimal ||
-      operation === 'equals' ||
+      previousOperation === 'equals' ||
       !currentNumber ||
       !currentSum ||
-      !operation ||
-      (operation === 'divide' && parseFloat(displayBottomEl.textContent) === 0)
+      !previousOperation ||
+      (previousOperation === 'divide' &&
+        parseFloat(displayBottomEl.textContent) === 0)
     ) {
       return;
     } else {
