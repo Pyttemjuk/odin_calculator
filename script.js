@@ -97,14 +97,8 @@ calculatorBtns.addEventListener('click', (e) => {
       } else {
         currentSum = calculate(previousOperation, currentSum, currentNumber);
       }
-
-      displayTopEl.textContent =
-        currentSum +
-        ' ' +
-        document.querySelector(`[data-action=${action}]`).textContent;
       previousOperation = action;
       currentNumber = '';
-      displayBottomEl.textContent = '';
     }
 
     if (action === 'equals') {
@@ -187,6 +181,12 @@ function displayString(action, key) {
       displayBottomEl.textContent +
       ' ' +
       document.querySelector(`[data-action=${action}]`).textContent;
+
+    displayTopEl.textContent =
+      currentSum +
+      ' ' +
+      document.querySelector(`[data-action=${action}]`).textContent;
+    displayBottomEl.textContent = '';
   }
 
   if (action === 'equals') {
