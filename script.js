@@ -6,9 +6,10 @@ const displayTopEl = document.querySelector('.display-top');
 const displayBottomEl = document.querySelector('.display-bottom');
 const calculatorBtns = document.querySelector('.calculator-btns');
 
-let previousOperation = '';
+let operation = '';
 let decimal = false;
 let currentNumber = 0;
+let previousNumber = 0;
 let currentSum = 0;
 
 function calculate(operator, firstNumber, secondNumber) {
@@ -25,26 +26,32 @@ calculatorBtns.addEventListener('click', (e) => {
   if (e.target.matches('button')) {
     const key = e.target;
     const action = key.dataset.action;
+    const previousAction = calculatorEl.dataset.previousAction;
 
-    doCalculations(action);
-    displayString(action, key);
+    doCalculations(action, previousAction, key);
+    displayString(action, previousAction, key);
+
+    calculatorEl.dataset.previousAction = action;
   }
 });
 
-function doCalculations(action) {
+function doCalculations(action, previousAction, key) {
   if (!action) {
-    if (previousOperation === 'equals') {
-      currentNumber = parseFloat(displayBottomEl.textContent);
+    if (operation === 'equals') {
+      currentNumber = parseFloat(key.textContent);
       currentSum = 0;
-      previousOperation = '';
     }
 
+    if (currentNumber === 0) {
+      currentNumber = parseFloat(key.textContent);
+    } else {
+      currentNumber = parseFloat(currentNumber.toString() + key.textContent);
+    }
     decimal = false;
-    currentNumber = parseFloat(displayBottomEl.textContent);
   }
 
   if (action === 'decimal') {
-    if (previousOperation === 'equals') {
+    if (operation === 'equals') {
       return;
     }
 
@@ -55,17 +62,17 @@ function doCalculations(action) {
   }
 
   if (action === 'plus-minus') {
-    if (previousOperation === 'equals') {
-      currentSum = parseFloat(displayBottomEl.textContent);
+    if (previousAction === 'equals') {
+      currentSum = -currentSum;
     } else {
-      currentNumber = parseFloat(displayBottomEl.textContent);
+      currentNumber = -currentNumber;
     }
   }
 
   if (action === 'clear') {
     currentNumber = 0;
     currentSum = 0;
-    previousOperation = '';
+    operation = '';
   }
 
   if (
@@ -78,60 +85,49 @@ function doCalculations(action) {
       return;
     }
 
-    //prettier-ignore
-    if (
-      (action === 'divide' && currentNumber === 0) ||
-      (currentSum === 0 && currentNumber === 0)
-      ) {
-        previousOperation = action;
-        return;
+    if (operation === 'divide' && currentNumber === 0) {
+      return;
+    }
+
+    if (previousAction === 'undefined' || previousAction === 'plus-minus') {
+      if (currentSum === 0) {
+        currentSum = currentNumber;
+      } else {
+        currentSum = calculate(operation, currentSum, currentNumber);
       }
-
-    if (!previousOperation) {
-      previousOperation = action;
     }
 
-    if (currentSum && previousOperation === 'equals') {
-    } else if (currentSum === 0) {
-      currentSum = parseFloat(displayBottomEl.textContent);
-    } else {
-      currentSum = calculate(previousOperation, currentSum, currentNumber);
-    }
-
-    previousOperation = action;
+    operation = action;
     currentNumber = 0;
   }
 
   if (action === 'equals') {
     if (
       decimal ||
-      previousOperation === 'equals' ||
-      !previousOperation ||
-      (previousOperation === 'divide' &&
-        parseFloat(displayBottomEl.textContent) === 0)
+      !operation ||
+      operation === 'equals' ||
+      (operation === 'divide' && parseFloat(displayBottomEl.textContent) === 0)
     ) {
       return;
     }
 
-    currentSum = calculate(previousOperation, currentSum, currentNumber);
+    currentSum = calculate(operation, currentSum, currentNumber);
+    previousNumber = currentNumber;
     currentNumber = 0;
-    previousOperation = 'equals';
+    operation = 'equals';
   }
 }
 
-function displayString(action, key) {
+function displayString(action, previousAction, key) {
   if (!action) {
-    if (
-      previousOperation !== 'equals' &&
-      displayBottomEl.textContent.length >= 10
-    ) {
+    if (operation !== 'equals' && displayBottomEl.textContent.length >= 10) {
       return;
     }
 
-    if (previousOperation === 'equals') {
+    if (operation === 'equals') {
       displayTopEl.textContent = '';
       displayBottomEl.textContent = key.textContent;
-    } else if (currentNumber === 0) {
+    } else if (displayBottomEl.textContent === '0') {
       displayBottomEl.textContent = key.textContent;
     } else {
       displayBottomEl.textContent += key.textContent;
@@ -172,7 +168,16 @@ function displayString(action, key) {
   }
 
   if (action === 'equals') {
-    displayTopEl.textContent += ' ' + currentNumber;
+    if (
+      decimal ||
+      !operation ||
+      previousAction === 'equals' ||
+      (operation === 'divide' && parseFloat(displayBottomEl.textContent) === 0)
+    ) {
+      return;
+    }
+
+    displayTopEl.textContent += ' ' + previousNumber;
     displayBottomEl.textContent = currentSum;
   }
 }
